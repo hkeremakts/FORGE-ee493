@@ -1,0 +1,51 @@
+# --- Large files: keep them in the team Google Drive, not in Git ---
+# Datasets and images
+datasets/
+data/
+*.zip
+*.tar
+*.tar.gz
+*.7z
+# Videos and recordings
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.bag
+*.mcap
+# Model weights and exports
+*.pt
+*.pth
+*.onnx
+*.engine
+*.tflite
+*.h5
+*.ckpt
+*.safetensors
+# YOLO / training outputs
+runs/
+wandb/
+
+# --- Python ---
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+
+# --- ROS 2 build outputs ---
+build/
+install/
+log/
+
+# --- Editors and OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+
+# --- Secrets ---
+.env
+*.key
