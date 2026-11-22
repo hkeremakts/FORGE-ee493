@@ -5,7 +5,7 @@
 **Related requirements:** _FR codes to be added from the Proposal Report (Requirement Analysis)_
 
 ## What this part does
-Moves the robot. It is a differential-drive base: two JGB37-520 12 V encoder motors, each driven by a BTS7960 board, with Pololu ball casters. An ESP32 counts the encoders, runs a PID speed loop for each wheel and computes odometry. It takes speed commands from the Raspberry Pi 5 over USB serial. The 3D-printed PETG chassis has two decks and a camera/UWB mast. The same plates support two wheel layouts (A: wheels at the front, B: wheels in the middle).
+Moves the robot. It is a differential-drive base: two JGB37-520 12 V encoder motors, each driven by a BTS7960 board, with Pololu ball casters. An ESP32 counts the encoders, runs a PID speed loop for each wheel and computes odometry. It takes speed commands from the Raspberry Pi 4 over USB serial; the protocol is being defined with Ömer in `OmerFurkanDirier/pi_esp32_link/`. The 3D-printed PETG chassis has two decks and a camera/UWB mast. The top plate takes the Pi 4 (58 × 49 mm, M2.5 holes) and the mast top takes the Pi Camera V2 (21 × 12.5 mm, M2 holes). The same plates support two wheel layouts (A: wheels at the front, B: wheels in the middle).
 
 ## Folder contents
 | Path | What |
@@ -47,7 +47,6 @@ Moves the robot. It is a differential-drive base: two JGB37-520 12 V encoder mot
 ## Open problems
 - Confirm that the 65 × 27 wheel hub accepts the 6 mm hex coupling.
 - Measure on the real parts: motor hole angle, wheel offset, encoder counts per revolution.
-- The XL4015 5 A converter is marginal for the Raspberry Pi 5 (power subsystem).
 - The 3S charger and fuses are still missing (power subsystem).
 
 ## Large files (Google Drive links)

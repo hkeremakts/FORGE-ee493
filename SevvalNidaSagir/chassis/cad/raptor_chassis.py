@@ -61,7 +61,7 @@ PILLARS = [(-53, 100), (0, 100.5), (53, 100), (-53, -100), (0, -100.5), (53, -10
 CASTERS = [(0, CASTER_Y), (0, -CASTER_Y)]
 POLOLU_HOLES = 14.7      # Pololu #953 1/2" metal bilyalı sarhoş, M2 (0,58")
 CASTER_H = 13.5          # Pololu #953 pulsuz yüksekliği (0,53")
-PI_HOLES = (58.0, 49.0)  # Raspberry Pi 5 (M2.5)
+PI_HOLES = (58.0, 49.0)  # Raspberry Pi 4 Model B (M2.5; Pi 5 ile aynı desen)
 PI_CENTER = (0.0, -65.0)
 MAST_SOCKETS = [(0.0, 0.0), (0.0, AXLE_A)]
 CABLE_SLOTS = [(-45, 18), (45, 18), (-45, -18), (45, -18)]
@@ -147,7 +147,7 @@ def top_plate():
     # kablo geçiş yarıkları
     for x, y in CABLE_SLOTS:
         p = p.cut(cq.Workplane("XY").center(x, y).slot2D(28, 10, 90).extrude(PLATE_T + 1).translate((0, 0, -0.5)))
-    # Raspberry Pi 5 ayakları
+    # Raspberry Pi 4 ayakları
     pis = [(PI_CENTER[0] + sx * PI_HOLES[0] / 2, PI_CENTER[1] + sy * PI_HOLES[1] / 2) for sx in (1, -1) for sy in (1, -1)]
     bosses = cq.Workplane("XY").pushPoints(pis).circle(3.2).extrude(5).translate((0, 0, PLATE_T))
     p = p.union(bosses)
@@ -220,7 +220,7 @@ def mast():
 
 
 def mast_top():
-    """Direğin ucuna geçer: üstte UWB tablası, önde kamera (Pi Camera Module 3) plakası."""
+    """Direğin ucuna geçer: üstte UWB tablası, önde kamera (Pi Camera V2) plakası."""
     sleeve = cq.Workplane("XY").rect(26, 26).extrude(18).edges("|Z").fillet(3)
     sleeve = sleeve.cut(cq.Workplane("XY").rect(20.6, 20.6).extrude(16.5).translate((0, 0, -0.01)))
     plat = cq.Workplane("XY").box(48, 48, 4, centered=(True, True, False)).edges("|Z").fillet(4).translate((0, 0, 18))
@@ -228,7 +228,7 @@ def mast_top():
     plat = plat.cut(cq.Workplane("XY").pushPoints(pts).circle(1.7).extrude(10).translate((0, 0, 15)))
     cam = cq.Workplane("XY").box(36, 4, 40, centered=(True, False, False)).translate((0, 20, 22))
     cam = cam.edges("|Y").fillet(3)
-    # Pi Camera Module 3: 21 x 12.5 mm, M2
+    # Pi Camera V2 (V3 ile aynı): 21 x 12.5 mm, M2
     cz = 22 + 24
     for sx in (1, -1):
         for sz in (1, -1):
@@ -332,7 +332,7 @@ def assembly(layout):
         a.add(box(x0, x1, y0, y1, PLATE_TOP, 43), name=f"bts7960_{i}", color=cq.Color(0.20, 0.42, 0.62))
     bat = (-38.5, 38.5, -95.0, -35.0)
     a.add(box(*bat, PLATE_TOP, 21), name="batarya_3s", color=cq.Color(0.25, 0.55, 0.35))
-    a.add(box(-42.5, 42.5, PI_CENTER[1] - 28, PI_CENTER[1] + 28, TOP_DECK_Z + PLATE_T + 5, 18), name="raspberry_pi5", color=cq.Color(0.15, 0.50, 0.30))
+    a.add(box(-42.5, 42.5, PI_CENTER[1] - 28, PI_CENTER[1] + 28, TOP_DECK_Z + PLATE_T + 5, 18), name="raspberry_pi4", color=cq.Color(0.15, 0.50, 0.30))
     a.add(box(22, 50, 35, 90, TOP_DECK_Z + PLATE_T, 12), name="esp32", color=cq.Color(0.12, 0.12, 0.14))
     mx, my = MAST_SOCKETS[0] if layout == "B" else MAST_SOCKETS[1]
     mz = TOP_DECK_Z + PLATE_T + 2

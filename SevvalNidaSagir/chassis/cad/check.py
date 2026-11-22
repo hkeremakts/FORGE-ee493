@@ -1,6 +1,7 @@
+import os
 import itertools
 import sys
-import os; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import raptor_chassis as rc
 
 for lay in ("B", "A"):

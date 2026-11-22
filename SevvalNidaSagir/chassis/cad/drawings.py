@@ -1,3 +1,4 @@
+import os
 """RAPTOR şase ölçü belgesi: CAD modelinden gizli çizgi hesaplı teknik görünüşler + ölçüler (A4 yatay PDF)."""
 import math
 import sys
@@ -15,8 +16,7 @@ from OCP.HLRAlgo import HLRAlgo_Projector
 from OCP.gp import gp_Ax2, gp_Pnt, gp_Dir
 from OCP.BRepLib import BRepLib
 
-import os
-HERE = os.path.dirname(os.path.abspath(__file__))  # doc/cover_*.png buraya göre aranır
+HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import raptor_chassis as rc
 from bom import BOM, BOM_COLUMNS, DIRENC_MOTOR, ROBOTISTAN_BTS
@@ -365,7 +365,7 @@ def page_layouts(pdf):
     sh.note(12, 30, [
         "Aynı plakalar iki düzeni de taşır: braketler B için y = 0'daki, A için y = 62'deki deliklere takılır.",
         "Dönüş alanı: araç yerinde dönerken en dış noktasının çizdiği daire (kamera direği hariç).",
-        "Üst katta: Raspberry Pi 5 (arka), ESP32 ve XL4015 (ön sağ), kamera direği B'de ortada / A'da aksın üstünde.",
+        "Üst katta: Raspberry Pi 4 (arka), ESP32 ve XL4015 (ön sağ), kamera direği B'de ortada / A'da aksın üstünde.",
     ], fs=6.3, lh=3.5)
     sh.save()
 
@@ -465,7 +465,7 @@ def page_top(pdf):
     dim(ax2, (58 * S - 68, 14 * S), (58 * S - 68, 14 * S + 5), -8, "5", orient="v")
     rows = [
         ("Kat direği", "Ø3,4", 6, "±53 ve 0", "±100 / ±100,5"),
-        ("Pi 5 ayağı", "Ø6,4×5, delik Ø2,2", 4, "±29", "−40,5 / −89,5"),
+        ("Pi 4 ayağı", "Ø6,4×5, delik Ø2,2", 4, "±29", "−40,5 / −89,5"),
         ("Direk yuvası", "30×30×14, cep 20,6×20,6×12", 2, "0", "0 / 62"),
         ("Kablo yarığı", "28×10", 4, "±45", "±18"),
         ("Izgara", "Ø3,4", "—", "15 aralık", "15 aralık"),
@@ -474,7 +474,7 @@ def page_top(pdf):
     sh.note(168, y - 3, [
         "Ayaklar ve yuvalar yukarı bakacak şekilde basılır.",
         "Direk yuvasında yan sıkıştırma deliği Ø2,8 (M3×8).",
-        "Pi 5: M2.5×6 vida ayaklara doğrudan diş açar.",
+        "Pi 4: M2.5×6 vida ayaklara doğrudan diş açar.",
         "Direkler: M3×10, plakadan direğe diş açar.",
     ], fs=6.3, lh=3.5, title="Notlar")
     sh.save()
@@ -622,7 +622,7 @@ def page_misc(pdf):
     dim(ax, (ox - 24, oy + 22), (ox + 24, oy + 22), 32 * S, "48")
     dim(ax, (ox - 24, oy), (ox - 24, oy + 62), -6 * S, "62", orient="v")
     dim(ax, (ox - 13, oy), (ox + 13, oy), -5 * S, "26 (iç 20,6)")
-    leader(ax, (ox + 10.5, oy + 46 + 6.25), (14, 10), "Pi Camera 3: 4 × Ø2,2\n21 × 12,5 aralık")
+    leader(ax, (ox + 10.5, oy + 46 + 6.25), (14, 10), "Pi Camera V2: 4 × Ø2,2\n21 × 12,5 aralık")
     view_label(ax, ox, oy - 12 * S, "Direk ucu · önden")
     view_label(ax, ox + 60 * S, oy - 12 * S, "Direk ucu · sağdan")
     leader(ax, (ox + 60 * S + 15, oy + 22), (10, 8), "UWB tablası 48×48,\n16 × Ø3,4 (10 aralık)")

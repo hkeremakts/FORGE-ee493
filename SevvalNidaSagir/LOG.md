@@ -2,6 +2,32 @@
 
 Newest entry at the top. Format is defined in [RULEBOOK.md](../RULEBOOK.md).
 
+### 2026-11-22 – Raspberry Pi 4 instead of Pi 5
+- **What I did:**
+  - Switched all my files from Raspberry Pi 5 to Raspberry Pi 4 (README, CAD names and comments, drawings, BOM). Ömer's and Güneş's logs had asked the team to confirm which board is used.
+  - Switched the camera from Pi Camera 3 to Pi Camera V2, which the team already owns.
+  - Regenerated the drawings, BOM and STEP files and re-ran the clash check.
+- **Decisions:**
+  - **Decision:** The robot uses the department-supplied Raspberry Pi 4 Model B (4 GB) as the high-level computer.
+    **Alternatives considered:** Raspberry Pi 5 (my earlier assumption).
+    **Reason:**
+    - The department supplied the Pi 4 (see Ömer's log), and the Proposal Report (Table 7) already lists it.
+    - It changes nothing mechanical: the Pi 4 and Pi 5 have the same 85 × 56 mm board and the same 58 × 49 mm M2.5 mounting holes.
+    - The ESP32/Pi split stays the same: the Pi 4 also has only 2 hardware PWM channels and runs Linux.
+    - Power gets easier: a Pi 4 needs 5 V / 3 A, so the XL4015 (5 A) is no longer marginal.
+  - **Decision:** The mast-top camera plate stays as it is for the Pi Camera V2.
+    **Alternatives considered:** Redesigning the plate.
+    **Reason:** Camera V2 and Camera 3 have the same 25 × 24 mm board and the same 21 × 12.5 mm M2 hole pattern.
+- **Results / measurements:**
+  - Printed parts (STL) are unchanged. Only labels and names in the STEP, PDF and BOM changed.
+  - Clash check still passes for both layouts.
+- **Problems / open questions:**
+  - The UWB board is a DWM3001CDK. Check that it fits the 48 × 48 mm UWB platform on the mast top, and measure its holes when it arrives.
+  - FR codes still need to be linked.
+- **Next steps:**
+  - Agree on the Pi 4 ↔ ESP32 serial protocol with Ömer.
+  - The steps from the 2026-11-18 entry still apply.
+
 ### 2026-11-18 – Drive system design, parts selection and 3D-printed chassis (v2)
 - **What I did:**
   - Chose the drive layout, motor, motor driver, controller split, wheels and casters.
