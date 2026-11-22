@@ -2,6 +2,32 @@
 
 Newest entry at the top. Format is defined in [RULEBOOK.md](../RULEBOOK.md).
 
+### 2026-11-22 – Stereo camera options for a single-CSI Pi 4 (in progress)
+- **What I did:**
+  - Re-read the RAPTOR project description for camera-related requirements.
+  - Compared stereo hardware routes for the Pi 4 against single-camera geometry.
+  - Created `pi_esp32_link/` as a placeholder for the Pi–ESP32 serial protocol (work on it later).
+- **Decisions:** – (none yet; options under discussion, see below)
+- **Results / measurements:** (public sources and my own calculations, not measurements)
+  - Project text: camera must contribute to localization; target detect ≤2 s, reacquire ≤3 s, follow at safe distance; avoid obstacles. "External localization aids such as LiDAR, GPS, or additional ranging devices shall not be used."
+  - Stereo depth error δZ = Z²·δd/(f·B). For 60 mm baseline, 73° HFOV, 640 px (f ≈ 432 px), δd = 0.5 px: 1.9 cm at 1 m, 7.7 cm at 2 m, 17 cm at 3 m, 48 cm at 5 m.
+  - Single camera on a flat floor (ground plane): Z = f·h/(v − v_horizon). With camera height h ≈ 0.23 m (my estimate from Şevval's chassis numbers, to verify) and 2 px bounding-box error: 2.0 cm at 1 m, 8.0 cm at 2 m, 18 cm at 3 m, 50 cm at 5 m. Almost the same as stereo. Weak point: pitch error, δZ ≈ Z²·δθ/h (1.3° caster rocking gives about 40 cm at 2 m unless the IMU corrects it). Fails if the target's feet are hidden.
+  - With h ≈ 0.23 m and 50° VFOV, a 1.7 m person is fully in view only beyond about 3.2 m.
+  - Two unsynchronized webcams: up to 33 ms frame offset at 30 fps; turning at 1 rad/s shifts the image about 14 px, more than the 8.6 px true disparity at 3 m. Not usable.
+  - Prices (USD/TRY 50.52, Wise, 2026-11-22; imports exclude shipping/customs):
+    - Waveshare IMX219-83 (60 mm baseline, 73° HFOV, ICM20948 IMU): 4,206.07 TL incl. KDV at Robotistan, shown sold out. Needs two CSI ports.
+    - Arducam CamArray stereo kits (one CSI port, hardware sync, Pi 4B listed): OV9281 mono global shutter $164.99 (~8,300 TL); AR0234 color $259.99 (~13,100 TL). 8MP IMX219 kit discontinued ($129.99).
+    - Luxonis OAK-D Lite (75 mm baseline, on-device depth and AI, BMI270): $269 (~13,600 TL).
+    - ELP synchronized USB stereo board (1.3 MP, side-by-side up to 2560×960 at 60 fps, MJPEG, USB 2.0): $80–84 (~4,050–4,250 TL). Only synchronized stereo option inside 5000 TL.
+  - Raspberry Pi docs: libcamera has no stereo support; Pi 4 has one camera connector.
+- **Problems / open questions:**
+  - Is 5000 TL a hard limit for the camera? Do we already own a Pi Camera V2?
+  - Advisor: are ToF/ultrasonic sensors allowed for obstacle avoidance only? Would a stereo camera count as a "ranging device"?
+  - Team following distance (decides camera tilt).
+  - Effect of H.264 compression on stereo matching on the PC: confirmed as a trade-off in literature, no numbers found; must measure.
+  - Does IMX219-83 work with an Arducam CamArray HAT? (ask Arducam)
+- **Next steps:** Get answers to the questions above and choose between single camera (ground plane + IMU pitch) and a stereo route.
+
 ### 2026-11-18 – Wi-Fi link research and stereo camera options
 - **What I did:** Researched whether the Pi 4 built-in Wi-Fi can stream the camera to a PC for offboard detection (FR5.1, FR5.2, FR2.3). Researched stereo camera options for the Pi 4 under a 5000 TL budget.
 - **Decisions:** –
