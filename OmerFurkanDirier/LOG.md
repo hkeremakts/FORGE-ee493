@@ -2,12 +2,17 @@
 
 Newest entry at the top. Format is defined in [RULEBOOK.md](../RULEBOOK.md).
 
-### 2026-11-22 – Stereo camera options for a single-CSI Pi 4 (in progress)
+### 2026-11-22 – Stereo vs single camera on a single-CSI Pi 4; plan written
 - **What I did:**
   - Re-read the RAPTOR project description for camera-related requirements.
   - Compared stereo hardware routes for the Pi 4 against single-camera geometry.
   - Created `pi_esp32_link/` as a placeholder for the Pi–ESP32 serial protocol (work on it later).
-- **Decisions:** – (none yet; options under discussion, see below)
+- **Decisions:**
+  - **Decision:** Proceed with the single camera (Pi Camera V2, already owned) as the working solution. Revisit if single-camera obstacle detection turns out to be inadequate.
+    **Alternatives considered:** Arducam CamArray synchronized stereo kit (about $165–260); ELP synchronized USB stereo board (about $80–84); Waveshare IMX219-83 (4,206 TL, needs two CSI ports, so unusable on Pi 4 as-is); OAK-D Lite ($269, does its own detection); two unsynchronized webcams (rejected: frame offset exceeds the signal).
+    **Reason:** Total team budget is $350, reduced by about $80 equipment rent (so roughly $270 left for everything); we already own the Camera V2; by hand-calculation, ground-plane ranging gives similar accuracy to 60 mm-baseline stereo at 1–3 m. Caveat: that comparison used assumed pixel errors (0.5 px stereo, 2 px ground plane) and an estimated camera height (0.23 m), so it must be verified by measurement (plan step C3). Advisor will not allow ToF/ultrasonic sensors (user's reading), so obstacle detection must come from the camera.
+- **Equipment (as of today):** Department supplied the Raspberry Pi 4 (4 GB) and one DWM3001CDK; BMI270 board is on the list, not received yet; Camera V2 is our own. The other four UWB anchors are set up by the course in a 10×10 m arena.
+- **Plan:** Written to `PLAN.md` (camera steps C1–C5, communication steps K1–K5). Hüseyin Kerem Aktaş owns the detection model.
 - **Results / measurements:** (public sources and my own calculations, not measurements)
   - Project text: camera must contribute to localization; target detect ≤2 s, reacquire ≤3 s, follow at safe distance; avoid obstacles. "External localization aids such as LiDAR, GPS, or additional ranging devices shall not be used."
   - Stereo depth error δZ = Z²·δd/(f·B). For 60 mm baseline, 73° HFOV, 640 px (f ≈ 432 px), δd = 0.5 px: 1.9 cm at 1 m, 7.7 cm at 2 m, 17 cm at 3 m, 48 cm at 5 m.
@@ -25,8 +30,13 @@ Newest entry at the top. Format is defined in [RULEBOOK.md](../RULEBOOK.md).
   - Advisor: are ToF/ultrasonic sensors allowed for obstacle avoidance only? Would a stereo camera count as a "ranging device"?
   - Team following distance (decides camera tilt).
   - Effect of H.264 compression on stereo matching on the PC: confirmed as a trade-off in literature, no numbers found; must measure.
-  - Does IMX219-83 work with an Arducam CamArray HAT? (ask Arducam)
-- **Next steps:** Get answers to the questions above and choose between single camera (ground plane + IMU pitch) and a stereo route.
+  - Pi 4 vs Pi 5: Şevval's README and LOG say Raspberry Pi 5; we use Pi 4. Team must confirm which board is real (affects camera ports and H.264 hardware encoding).
+  - Pi operating system (Raspberry Pi OS vs Ubuntu) is undecided; affects libcamera and ROS 2 setup.
+  - What the PC sends back (proposal: timestamped detections, not motor commands) is not agreed.
+  - Camera height and tilt not decided (my task); a person is fully in view only beyond about 3.2 m at 0.23 m height and 50° VFOV.
+  - Following distance not decided by the team.
+  - The ToF/ultrasonic ban is my reading of the advisor's view; worth confirming with him.
+- **Next steps:** Follow PLAN.md: boot the Pi 4 with the chosen OS, get a frame from the Camera V2 (C1), and run iperf3/ping with power save off (K1). Raise Pi 4 vs 5 and the OS choice in the group chat. Study the reading list in PLAN.md; calibration and range exercises were skipped for now.
 
 ### 2026-11-18 – Wi-Fi link research and stereo camera options
 - **What I did:** Researched whether the Pi 4 built-in Wi-Fi can stream the camera to a PC for offboard detection (FR5.1, FR5.2, FR2.3). Researched stereo camera options for the Pi 4 under a 5000 TL budget.

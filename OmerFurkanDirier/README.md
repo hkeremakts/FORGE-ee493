@@ -7,20 +7,32 @@
 ## What this part does
 Provides the data links between the Raspberry Pi 4 on RAPTOR and the ground-station PC: the camera stream to the PC (detection runs offboard on team PCs), detection results and commands back to the Pi, telemetry to the GUI, and the e-stop path.
 
+## Folder contents
+| Path | What |
+|---|---|
+| `PLAN.md` | Camera and communication plan (steps C1–C5, K1–K5) and reading list |
+| `LOG.md` | Dated work log |
+| `pi_esp32_link/` | Placeholder for the Pi–ESP32 serial protocol (not started) |
+
 ## How to run it
 Not runnable yet.
 
 ## Current status
-Research and design phase. Nothing is built or measured yet.
-- Pi 4 built-in Wi-Fi (CYW43455, 802.11ac, 1x1) is the candidate for the PC link; see LOG.md for sourced numbers.
-- Stereo camera for the Pi 4 is undecided; see LOG.md.
+Research and planning phase. Nothing is built or measured yet.
+- Working solution: single camera (Pi Camera V2, already owned) on the Pi 4. Stereo options were compared and set aside for now because of budget (about $270 left for everything) and one CSI port; see LOG.md 2026-11-22.
+- Pi 4 built-in Wi-Fi is the candidate for the PC link; see LOG.md 2026-11-18 for sourced numbers.
+- Detection model: Hüseyin Kerem Aktaş.
 
 ## Open problems
-- Real Wi-Fi throughput and ping across the arena are not measured (planned: iperf3).
-- Whether to use our own router/access point, a PC hotspot, or campus Wi-Fi is undecided.
-- End-to-end camera delay on Pi 4 + Camera V2 is unknown (no measurement found).
-- Wi-Fi power save on the Pi must be checked and disabled (spikes up to 1.46 s reported elsewhere vs. the 0.5 s limit in FR5.2).
-- IMX219-83 does not fit a single-CSI Pi 4 as-is; stereo options are unresolved.
+- Pi 4 vs Pi 5: Şevval's folder says Pi 5. Team must confirm.
+- Pi operating system (Raspberry Pi OS vs Ubuntu) undecided.
+- What the PC sends back to the robot (proposal: timestamped detections, not motor commands) not agreed.
+- Single-camera ranging accuracy is only calculated, with assumed pixel errors. Needs measurement (PLAN.md step C3).
+- Camera height and tilt undecided (mine to research); coordinate mast with Şevval.
+- Real Wi-Fi throughput and ping across the arena not measured (iperf3). Router/access point choice open; may we bring our own?
+- End-to-end camera delay on Pi 4 + Camera V2 unknown (PLAN.md step C5).
+- Wi-Fi power save must be checked and disabled.
+- Pi–ESP32 protocol not defined.
 
 ## Large files (Google Drive links)
 - None yet.
