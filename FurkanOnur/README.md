@@ -17,7 +17,7 @@ The ground station GUI shows the robot position, target track, sensor health, mi
 Not runnable yet.
 
 ## Current status
-Early concept stage. Evaluating the ground station platform: web-based interface vs. desktop application. No code yet.
+Early concept stage. Researched UWB communication methods (pros/cons list ready for discussion) and camera options (preliminary recommendation ready, not yet discussed with the team). Ground station platform (web vs. desktop) not decided yet. No code yet.
 
 ## Open problems
 - Platform choice for the ground station GUI (web-based vs. desktop app).
