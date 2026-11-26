@@ -2,6 +2,40 @@
 
 Newest entry at the top. Format is defined in [RULEBOOK.md](../RULEBOOK.md).
 
+### 2026-11-26 – First bench tests and test procedure
+- **What I did:**
+  - Planned the bench tests one part at a time: motor alone, driver without the ESP32, ESP32 alone, encoder with the ESP32, then ESP32 + driver + motor.
+  - Wrote the test sketch `firmware/bts7960_test/bts7960_test.ino`: Serial commands set the motor speed in percent, and the sketch prints encoder counts and wheel rpm. It ramps the speed, limits it to 60 % and stops after 5 s without a command.
+  - Turned my hand notes into a test procedure and record sheet (`tests/bench_test_procedure.pdf`) with wiring diagrams, pinouts and check boxes.
+  - Test 1: the motor turned with its red/white wires directly on the bench supply.
+- **Decisions:**
+  - **Decision:** Test each part on its own before connecting it to the next one.
+    **Alternatives considered:** Wiring the full system and testing it at once.
+    **Reason:** When something fails, we know which part is at fault: motor, driver, ESP32 or wiring.
+  - **Decision:** Power the BTS7960 logic (VCC) and the EN pins from the ESP32 3V3 pin, not 5 V.
+    **Alternatives considered:** 5 V on VCC (common in Arduino examples).
+    **Reason:**
+    - The board's input buffer runs on VCC. With VCC = 5 V, a 3.3 V ESP32 signal is at the edge of what the buffer reads as high.
+    - With VCC = 3.3 V, all levels are in range. The BTS7960 inputs need at most 2.15 V for a high level.
+    - Fallback if the driver does not respond: VCC and EN to 5 V.
+  - **Decision:** Encoder supply on 3V3.
+    **Alternatives considered:** 5 V.
+    **Reason:** The encoder outputs follow its supply, and the ESP32 inputs are not 5 V tolerant.
+  - **Decision:** PWM at 20 kHz, 10-bit, on RPWM/LPWM. EN pins tied high.
+    **Alternatives considered:** PWM on the EN pins with RPWM/LPWM as direction.
+    **Reason:**
+    - 20 kHz is inaudible and below the BTS7960's 25 kHz limit.
+    - PWM on RPWM/LPWM brakes the motor during the off time, which gives a more linear speed response than coasting.
+- **Results / measurements:**
+  - Test 1: motor M1 turns on the supply directly. The other values (current, counts per turn, start-up %, rpm) are still to be filled in on the record sheet.
+- **Problems / open questions:**
+  - The real counts per output-shaft turn (836 from the datasheet) must be measured in Test 4.
+  - The ESP32 headers must be soldered before Tests 4–5.
+- **Next steps:**
+  1. Finish Tests 2–5 on both motors and drivers, and record the values.
+  2. Test 6: both motors together.
+  3. Test 7: wheel-speed PID.
+
 ### 2026-11-22 – Raspberry Pi 4 instead of Pi 5
 - **What I did:**
   - Switched all my files from Raspberry Pi 5 to Raspberry Pi 4 (README, CAD names and comments, drawings, BOM). Ömer's and Güneş's logs had asked the team to confirm which board is used.

@@ -17,7 +17,11 @@ Moves the robot. It is a differential-drive base: two JGB37-520 12 V encoder mot
 | `chassis/step/` | Same parts and both assemblies (`montaj_A/B.step`) for editing in CAD |
 | `chassis/motor_model/` | JGB37-520 3D model (STEP/STL, drawn from the datasheet) |
 | `chassis/cad/` | Parametric CadQuery source and scripts for drawings, BOM and clash check |
-| `firmware/legacy_mdd3a/` | First encoder test and motor-control sketches (written for a Cytron MDD3A, being ported to BTS7960) |
+| `firmware/bts7960_test/` | Bench test sketch: drive each motor by percent from the Serial Monitor, read encoder counts and wheel rpm |
+| `firmware/legacy_mdd3a/` | First encoder test and motor-control sketches (written for a Cytron MDD3A) |
+| `tests/bench_test_procedure.pdf` | Bench test procedure and record sheet (Tests 1–5: motor, driver, ESP32, encoder, ESP32 + driver + motor), with wiring diagrams and pinouts |
+| `tests/bench_test_procedure.html` | Same document, with ticks and values saved in the browser |
+| `tests/hand_notes/` | Original hand-written test sketches |
 
 ## How to run it
 - **Chassis:** print the STL files in PETG. Print settings and assembly order are in the drawings PDF.
@@ -28,7 +32,7 @@ Moves the robot. It is a differential-drive base: two JGB37-520 12 V encoder mot
   python3 raptor_chassis.py   # writes out/
   python3 check.py            # clash check
   ```
-- **Firmware:** not runnable on the final hardware yet. The legacy sketches need Arduino IDE with ESP32 core 3.x and the `ESP32Encoder` library.
+- **Firmware:** Arduino IDE 2 with the ESP32 core 3.x and the `ESP32Encoder` library (Kevin Harrington). Upload `firmware/bts7960_test/bts7960_test.ino`, open Serial Monitor at 115200 baud (Newline) and type `L 20`, `R -20`, `B 30`, `S`, `Z`. Wiring and order of tests: `tests/bench_test_procedure.pdf`.
 
 ## Current status
 - **Design v2 frozen:**
