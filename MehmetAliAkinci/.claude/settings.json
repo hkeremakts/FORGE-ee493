@@ -1,0 +1,26 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python -c \"from pathlib import Path; import runpy; p=next(p for p in (Path.cwd(), *Path.cwd().parents) if (p / 'MehmetAliAkinci/AGENTS.md').is_file()); runpy.run_path(str(p / 'MehmetAliAkinci/tools/worklog_guard.py'), run_name='__main__')\"",
+            "timeout": 60
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python -c \"from pathlib import Path; import runpy; p=next(p for p in (Path.cwd(), *Path.cwd().parents) if (p / 'MehmetAliAkinci/AGENTS.md').is_file()); runpy.run_path(str(p / 'MehmetAliAkinci/tools/worklog_guard.py'), run_name='__main__')\"",
+            "timeout": 60
+          }
+        ]
+      }
+    ]
+  }
+}
