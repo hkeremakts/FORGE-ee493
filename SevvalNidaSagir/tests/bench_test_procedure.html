@@ -76,7 +76,7 @@ button:focus-visible{outline:2px solid var(--fill);outline-offset:2px}
 .legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--mute);margin:4px 2px}
 .legend i{display:inline-block;width:22px;height:4px;border-radius:2px;vertical-align:middle;margin-right:6px}
 @media(max-width:600px){table{font-size:13px}.stack thead{display:none}.stack tr{display:grid;padding-block:10px;border-bottom:1px solid var(--line)}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:8em;text-align:start}.stack td::before{content:attr(data-l);float:inline-start;width:7.5em;margin-inline-start:-8em;white-space:normal;color:var(--mute);font-size:12px}.stack td:empty{display:none}}
-@media print{.btns,#msg,.nav{display:none}section.sheet{break-before:page;margin-top:0}.diagram svg{min-width:0}body{font-size:12px;line-height:1.4}.wrap{padding:0}.grid2{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:16px}label.ck{width:30px;height:30px}th,td{padding:4px 6px}table{font-size:12px}h3{margin:12px 0 6px}textarea{min-height:44px}.legend{font-size:11px}#pinouts .cards{grid-template-columns:1fr 1fr}.photos{grid-template-columns:1fr 1fr}}
+@media print{.btns,#msg,.nav{display:none}section.sheet{break-before:page;margin-top:0}.diagram svg{min-width:0}body{font-size:12px;line-height:1.4}.wrap{padding:0}.grid2{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:16px}label.ck{width:30px;height:30px}th,td{padding:4px 6px}table{font-size:12px}h3{margin:12px 0 6px}textarea{min-height:44px}.legend{font-size:11px}#pinouts .cards{grid-template-columns:1fr 1fr;gap:12px;align-items:start}#pinouts .espc{grid-column:2;grid-row:1 / span 2}#pinouts .box{padding:8px 10px}#pinouts h3{font-size:14px}.photos{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
@@ -131,7 +131,7 @@ button:focus-visible{outline:2px solid var(--fill);outline-offset:2px}
     <div class="cards">
       <div class="box pin"><h3 style="margin-top:0">JGB37-520 motor wires</h3><svg id="p_motor" viewBox="0 0 360 230" role="img" aria-label="Motor wire colours"></svg></div>
       <div class="box pin"><h3 style="margin-top:0">BTS7960 driver board</h3><svg id="p_bts" viewBox="0 0 360 300" role="img" aria-label="BTS7960 pinout"></svg><p class="small mute" style="margin:6px 0 0">Power terminal order as on our board. The logic header is the 8-pin block: top row VCC, R_IS, R_EN, RPWM; bottom row GND, L_IS, L_EN, LPWM.</p></div>
-      <div class="box pin"><h3 style="margin-top:0">ESP32 DevKit V1 (30 pin), USB down</h3><svg id="p_esp" viewBox="0 0 360 520" role="img" aria-label="ESP32 pinout"></svg></div>
+      <div class="box pin espc"><h3 style="margin-top:0">ESP32 DevKit V1 (30 pin), USB down</h3><svg id="p_esp" viewBox="0 0 360 520" role="img" aria-label="ESP32 pinout"></svg></div>
     </div>
   </section>
 
@@ -268,7 +268,7 @@ document.getElementById('p_motor').innerHTML=
  R(150,60,70,70,{fill:'#b9a46a',rx:4})+R(220,64,70,62,{fill:'#9aa0a6',rx:4})+R(290,82,46,26,{fill:'#c7ccd1',rx:2})+T(255,148,'gearbox',{a:'middle',fs:11,fill:'var(--mute)'})+T(190,148,'motor',{a:'middle',fs:11,fill:'var(--mute)'})+T(313,74,'output shaft',{a:'middle',fs:11,fill:'var(--mute)'})
  +R(132,58,18,74,{fill:'#2c7a3d',rx:2})+T(141,152,'encoder',{a:'middle',fs:11,fill:'var(--mute)'})
  +MW.map(([c,f,y,col],i)=>{const yy=66+i*12,ly=28+i*30;return W([[132,yy],[112,yy],[100,ly]],col,{sw:3})+T(8,ly+4,`${c} · ${f}`,{fs:12})}).join('')
- +T(180,205,'red/white: motor power. blue/black: encoder supply (3V3). yellow/green: A/B.',{a:'middle',fs:10.5,fill:'var(--mute)'});
+ +T(180,198,'red/white: motor power · blue/black: encoder supply (3V3)',{a:'middle',fs:10.5,fill:'var(--mute)'})+T(180,214,'yellow/green: encoder A / B',{a:'middle',fs:10.5,fill:'var(--mute)'});
 const BH=[['VCC','GND'],['R_IS','L_IS'],['R_EN','L_EN'],['RPWM','LPWM']];
 document.getElementById('p_bts').innerHTML=
  R(30,40,300,230,{fill:'var(--board)',stroke:'#0f2d55'})+R(110,95,140,90,{fill:'#9aa0a6',stroke:'#6b7178',rx:3})+T(180,145,'heatsink',{a:'middle',fs:12,fill:'#1b1b1b'})
