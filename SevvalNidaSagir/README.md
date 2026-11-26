@@ -20,6 +20,7 @@ Moves the robot. It is a differential-drive base: two JGB37-520 12 V encoder mot
 | `firmware/bts7960_test/` | Bench test sketch: drive each motor by percent from the Serial Monitor, read encoder counts and wheel rpm |
 | `firmware/legacy_mdd3a/` | First encoder test and motor-control sketches (written for a Cytron MDD3A) |
 | `tests/bench_test_procedure.pdf` | Bench test procedure and record sheet (Tests 1–5: motor, driver, ESP32, encoder, ESP32 + driver + motor), with wiring diagrams and pinouts |
+| `tests/bench_test_procedure_TR.pdf` | Turkish version of the same procedure (technical terms kept in English) |
 | `tests/bench_test_procedure.html` | Same document, with ticks and values saved in the browser |
 | `tests/hand_notes/` | Original hand-written test sketches |
 
